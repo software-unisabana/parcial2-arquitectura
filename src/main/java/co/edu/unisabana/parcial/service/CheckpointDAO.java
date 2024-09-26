@@ -13,12 +13,10 @@ import org.springframework.stereotype.Repository;
 @AllArgsConstructor
 public class CheckpointDAO implements CheckpointPort {
 
-  private CheckpointRepository checkpointRepository;
+  private Inver checkpointRepository;
 
   @Override
-  public void saveCheckin(Checkin checkin) {
-    checkpointRepository.save(Checkpoint.fromCheckin(checkin));
-  }
+  public void saveCheckin(Checkin checkin) {checkpointRepository.save(Checkpoint.fromCheckin(checkin)); }
 
   @Override
   public void saveCheckout(Checkout checkout) {

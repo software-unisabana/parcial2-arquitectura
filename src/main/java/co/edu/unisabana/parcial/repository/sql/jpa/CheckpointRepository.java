@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface CheckpointRepository extends JpaRepository<Checkpoint, Integer> {
 
   Optional<Checkpoint> findFirstByDriverAndFacilityAndFinalizedIsFalse(String driver, String facility);
+
 }

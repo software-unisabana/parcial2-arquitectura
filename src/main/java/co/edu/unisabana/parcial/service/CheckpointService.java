@@ -13,16 +13,16 @@ public class CheckpointService {
 
   private CheckpointPort checkpointPort;
 
-  public void checkin(CheckpointDTO checkpoint) {
+  public String checkin(CheckpointDTO checkpoint) {
     if (checkpoint.dayOfMonth > 30 || checkpoint.dayOfMonth < 1) {
       throw new IllegalArgumentException("Invalid date");
     }
     Checkin checkin = new Checkin(checkpoint.facility, checkpoint.driver, checkpoint.dayOfMonth);
     checkpointPort.saveCheckin(checkin);
-
+    return "check in added";
   }
 
-  public void checkout(CheckpointDTO checkpoint) {
+  public String checkout(CheckpointDTO checkpoint) {
     Checkin lastCheckin = checkpointPort.findLastCheckin(checkpoint.driver, checkpoint.facility);
     if (lastCheckin == null) {
       throw new IllegalArgumentException("don't exist previously check in");
@@ -32,5 +32,7 @@ public class CheckpointService {
     }
     Checkout checkout = new Checkout(checkpoint.facility, checkpoint.driver, checkpoint.dayOfMonth);
     checkpointPort.saveCheckout(checkout);
+
+    return "check out added";
   }
 }
