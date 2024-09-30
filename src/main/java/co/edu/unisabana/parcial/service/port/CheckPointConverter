@@ -1,0 +1,11 @@
+package co.edu.unisabana.parcial.service.port;
+
+import co.edu.unisabana.parcial.service.model.Checkin;
+import co.edu.unisabana.parcial.service.model.Checkout;
+import co.edu.unisabana.parcial.repository.sql.entity.Checkpoint;
+
+public interface CheckpointConverter {
+    Checkpoint fromCheckin(Checkin checkin);
+    Checkpoint fromCheckout(Checkout checkout);
+    Checkin toCheckin(Checkpoint checkpoint);
+}

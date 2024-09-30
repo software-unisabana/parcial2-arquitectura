@@ -1,0 +1,42 @@
+package co.edu.unisabana.parcial;
+
+import co.edu.unisabana.parcial.service.model.Checkin;
+import co.edu.unisabana.parcial.service.model.Checkout;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CheckpointTest {
+
+    @Test
+    void testToCheckin() {
+        // Configuración
+        Checkpoint checkpoint = new Checkpoint(1, "CHECKIN", "Facility1", "Driver1", 15, LocalDateTime.now(), false);
+        
+        Checkin checkin = checkpoint.toCheckin();
+        
+        assertEquals(1, checkin.getId());
+        assertEquals("Facility1", checkin.getFacility());
+        assertEquals("Driver1", checkin.getDriver());
+        assertEquals(15, checkin.getDayOfMonth());
+    }
+
+    @Test
+    void testFromCheckin() {
+        Checkin checkin = new Checkin("Facility1", "Driver1", 15);
+        checkin.setId(1);
+        
+        Checkpoint checkpoint = Checkpoint.fromCheckin(checkin);
+        
+        assertEquals("Facility1", checkpoint.getFacility());
+        assertEquals("Driver1", checkpoint.getDriver());
+        assertEquals(15, checkpoint.getDayOfMonth());
+        assertEquals("CHECKIN", checkpoint.getType());
+        assertFalse(checkpoint.isFinalized());
+        assertNotNull(checkpoint.getCreationDate());
+    }
+
+    @Test
+    void testFromCheckout

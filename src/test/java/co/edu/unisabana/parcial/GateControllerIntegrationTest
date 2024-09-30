@@ -1,0 +1,63 @@
+package co.edu.unisabana.parcial;
+
+import co.edu.unisabana.parcial.controller.dto.CheckpointDTO;
+import co.edu.unisabana.parcial.controller.dto.ResponseGate;
+import co.edu.unisabana.parcial.service.CheckpointService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class GateControllerIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private CheckpointService checkpointService; 
+
+    @BeforeEach
+    void setUp() {
+    }
+
+    @Test
+    void testCheckin() throws Exception {
+        CheckpointDTO checkpointDTO = new CheckpointDTO();
+        checkpointDTO.setDriver("Driver1");
+        checkpointDTO.setFacility("Facility1");
+        checkpointDTO.setDayOfMonth(15);
+        
+        mockMvc.perform(post("/checkpoint/checkin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(checkpointDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true));
+    }
+
+    @Test
+    void testCheckout() throws Exception {
+        CheckpointDTO checkpointDTO = new CheckpointDTO();
+        checkpointDTO.setDriver("Driver1");
+        checkpointDTO.setFacility("Facility1");
+        checkpointDTO.setDayOfMonth(15);
+        
+        mockMvc.perform(post("/checkpoint/checkout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(checkpointDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true));
+    }
+}

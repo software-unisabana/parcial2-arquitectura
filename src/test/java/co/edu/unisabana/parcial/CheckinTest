@@ -1,0 +1,52 @@
+package co.edu.unisabana.parcial;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CheckinTest {
+
+    @Test
+    void testConstructorAndGetters() {
+        Checkin checkin = new Checkin("Facility1", "Driver1", 15);
+        
+        assertEquals("Facility1", checkin.getFacility());
+        assertEquals("Driver1", checkin.getDriver());
+        assertEquals(15, checkin.getDayOfMonth());
+    }
+
+    @Test
+    void testSetId() {
+        Checkin checkin = new Checkin("Facility1", "Driver1", 15);
+        
+        checkin.setId(1);
+        
+        assertEquals(1, checkin.getId());
+    }
+
+    @Test
+    void testEqualsAndHashCode() {
+        Checkin checkin1 = new Checkin("Facility1", "Driver1", 15);
+        checkin1.setId(1);
+
+        Checkin checkin2 = new Checkin("Facility1", "Driver1", 15);
+        checkin2.setId(1);
+
+        Checkin checkin3 = new Checkin("Facility2", "Driver2", 20);
+        
+        assertEquals(checkin1, checkin2);
+        assertNotEquals(checkin1, checkin3);
+        
+        assertEquals(checkin1.hashCode(), checkin2.hashCode());
+        assertNotEquals(checkin1.hashCode(), checkin3.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        Checkin checkin = new Checkin("Facility1", "Driver1", 15);
+        checkin.setId(1);
+
+        String expected = "Checkin(facility=Facility1, driver=Driver1, dayOfMonth=15, id=1)";
+        assertEquals(expected, checkin.toString());
+    }
+}

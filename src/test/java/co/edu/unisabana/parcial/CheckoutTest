@@ -1,0 +1,38 @@
+package co.edu.unisabana.parcial;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CheckoutTest {
+
+    @Test
+    void testConstructorAndGetters() {
+        Checkout checkout = new Checkout("Facility1", "Driver1", 15);
+        
+        assertEquals("Facility1", checkout.getFacility());
+        assertEquals("Driver1", checkout.getDriver());
+        assertEquals(15, checkout.getDayOfMonth());
+    }
+
+    @Test
+    void testEqualsAndHashCode() {
+        Checkout checkout1 = new Checkout("Facility1", "Driver1", 15);
+        Checkout checkout2 = new Checkout("Facility1", "Driver1", 15);
+        Checkout checkout3 = new Checkout("Facility2", "Driver2", 20);
+        
+        assertEquals(checkout1, checkout2);
+        assertNotEquals(checkout1, checkout3);
+        
+        assertEquals(checkout1.hashCode(), checkout2.hashCode());
+        assertNotEquals(checkout1.hashCode(), checkout3.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        Checkout checkout = new Checkout("Facility1", "Driver1", 15);
+
+        String expected = "Checkout(facility=Facility1, driver=Driver1, dayOfMonth=15)";
+        assertEquals(expected, checkout.toString());
+    }
+}

@@ -1,0 +1,42 @@
+package co.edu.unisabana.parcial.service;
+
+import co.edu.unisabana.parcial.service.model.Checkin;
+import co.edu.unisabana.parcial.service.model.Checkout;
+import co.edu.unisabana.parcial.repository.sql.entity.Checkpoint;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+
+@Component
+public class CheckpointConverterImpl implements CheckpointConverter {
+
+    @Override
+    public Checkpoint fromCheckin(Checkin checkin) {
+        Checkpoint checkpoint = new Checkpoint();
+        checkpoint.setCreationDate(LocalDateTime.now());
+        checkpoint.setDriver(checkin.getDriver());
+        checkpoint.setFacility(checkin.getFacility());
+        checkpoint.setDayOfMonth(checkin.getDayOfMonth());
+        checkpoint.setType("CHECKIN");
+        checkpoint.setFinalized(false);
+        return checkpoint;
+    }
+
+    @Override
+    public Checkpoint fromCheckout(Checkout checkout) {
+        Checkpoint checkpoint = new Checkpoint();
+        checkpoint.setDriver(checkout.getDriver());
+        checkpoint.setFacility(checkout.getFacility());
+        checkpoint.setDayOfMonth(checkout.getDayOfMonth());
+        checkpoint.setType("CHECKOUT");
+        checkpoint.setFinalized(false); 
+        return checkpoint;
+    }
+
+    @Override
+    public Checkin toCheckin(Checkpoint checkpoint) {
+        Checkin checkin = new Checkin(checkpoint.getFacility(), checkpoint.getDriver(), checkpoint.getDayOfMonth());
+        checkin.setId(checkpoint.getId());
+        return checkin;
+    }
+}

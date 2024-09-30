@@ -1,0 +1,50 @@
+package co.edu.unisabana.parcial;
+
+import co.edu.unisabana.parcial.controller.dto.CheckpointDTO;
+import co.edu.unisabana.parcial.service.CheckpointService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class GateControllerIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private CheckpointService checkpointService;
+
+    @Test
+    void testCheckin() throws Exception {
+        CheckpointDTO checkpointDTO = new CheckpointDTO("Facility1", "Driver1", 15);
+
+        mockMvc.perform(post("/checkpoint/checkin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"facility\":\"Facility1\", \"driver\":\"Driver1\", \"day_of_month\":15}"))
+                .andExpect(status().isOk());
+
+        verify(checkpointService).checkin(any(CheckpointDTO.class));
+    }
+
+    @Test
+    void testCheckout() throws Exception {
+        CheckpointDTO checkpointDTO = new CheckpointDTO("Facility1", "Driver1", 15);
+
+        mockMvc.perform(post("/checkpoint/checkout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"facility\":\"Facility1\", \"driver\":\"Driver1\", \"day_of_month\":15}"))
+                .andExpect(status().isOk());
+
+        verify(checkpointService).checkout(any(CheckpointDTO.class));
+    }
+}

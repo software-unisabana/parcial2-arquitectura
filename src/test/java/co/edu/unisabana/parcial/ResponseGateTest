@@ -1,0 +1,29 @@
+package co.edu.unisabana.parcial;
+
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ResponseGateTest {
+
+    @Test
+    void testDefaultConstructor() {
+        ResponseGate responseGate = new ResponseGate();
+
+        assertThat(responseGate.transactionResult).isFalse();
+    }
+
+    @Test
+    void testParameterizedConstructor() {
+        ResponseGate responseGate = new ResponseGate(true);
+
+        assertThat(responseGate.transactionResult).isTrue();
+    }
+
+    @Test
+    void testGetters() {
+        ResponseGate responseGate = new ResponseGate(false);
+
+        assertThat(responseGate.getTransactionResult()).isFalse();
+    }
+}
