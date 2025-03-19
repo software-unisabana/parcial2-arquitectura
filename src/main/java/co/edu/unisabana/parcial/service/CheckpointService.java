@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CheckpointService {
+public class CheckpointService implements ICheckpointService{
 
   private CheckpointPort checkpointPort;
 
